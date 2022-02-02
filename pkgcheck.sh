@@ -6,9 +6,10 @@ red=$(tput setaf 1)
 #Set output file to store duplicated packages
 pkgOutput="/home/alex/pkgdupe.txt"
 aurpkgOutput="/home/alex/aurpkgdupe.txt"
+repoName="aurmageddon"
 #Get a list of all packages in the aurmageddon repo
 declare -a repoPackages aurPackages archPackages
-mapfile -t repoPackages < <(pacman -Sl aurmageddon | cut -d " " -f2 | sort -u)
+mapfile -t repoPackages < <(pacman -Sl "$repoName" | cut -d " " -f2 | sort -u)
 mapfile -t aurPackages < <(yay -Sl aur | cut -d " " -f2 | sort -u)
 mapfile -t mainRepoPackages < <(pacman -Sl core community extra | cut -d " " -f2)
 
