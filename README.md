@@ -1,6 +1,14 @@
 # An automatic system for build your own AUR software repository on Arch
 This project contains a small collection of scripts to manage and create your own Arch software repository. All compiled packages will end up uploaded to a remote server allowing others to download your packages.
 
+I use this script to build AUR packages for my [aurmageddon](https://wailord284.club) repository. Append the following to your pacman.conf if you wish to utilize it.
+
+```
+[aurmageddon]
+Server = http://wailord284.club/repo/$repo/$arch
+SigLevel = Never 
+```
+
 # How it works
 This AUR builder depends on the [aurutils](https://aur.archlinux.org/packages/aurutils/) utility to download packages. To tell the script what packages you want to build, you can create a text file with names of software. This current configuration has a aurpackages.txt and aurgitpackages.txt that will be processed.
 
