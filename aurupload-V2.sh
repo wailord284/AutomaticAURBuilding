@@ -14,14 +14,14 @@ remoteRepoLogin="alex@wailord284.club"
 remoteRepoPath="/var/www/wailord284.club/public/repo/aurmageddon/x86_64/"
 
 
-cd "$repoPackageDirectory" || echo "Could not find $repoPackageDirectory"
+cd "$repoPackageDirectory"
 #Remove the old database files
 rm -r "$repoPackageDirectory"/database/*
 printf "\e]2;Generating database files...\a"
 #Generate the repo database with all *.pkg.tar.zst files in the /packages/ directory
 repo-add -n -R "$repoPackageDirectory"/database/"$repoName".db.tar.gz "$repoPackageDirectory"/packages/*.pkg.tar.zst
 
-cd "$repoPackageDirectory" || echo "Could not find $repoPackageDirectory"
+cd "$repoPackageDirectory"
 printf "\e]2;Syncing repository and packages with remote server...\a"
 #Sync packages and database to remote server with rsync. If possible, install rsync on the remote server as well
 rsync --delete-delay -Pavhe ssh "packages/" "$remoteRepoLogin":"$remoteRepoPath"
