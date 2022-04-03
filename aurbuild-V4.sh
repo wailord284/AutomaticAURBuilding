@@ -1,8 +1,4 @@
 #!/bin/bash
-#By setting this, some packages that are built will search for ccache
-#This is not required, but may speed up building for some applications
-#This can also be enforced for ALL packages by enabling ccache in makepkg.conf
-export USE_CCACHE=1
 #Colors
 yellow=$(tput setaf 3) #Status
 green=$(tput setaf 2) #OK
@@ -64,7 +60,7 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 		builtPackageBeforeTemp=$(mktemp)
 		builtPackageAfterTemp=$(mktemp)
 		oldPackage=$(mktemp)
-		
+
 		cd "$repoBuildDirectory"/"$package"
 		#Check for built packages before and after running makepkg
 		echo $(ls -Art | grep ".pkg.tar.zst" | tr " " "\n") > "$builtPackageBeforeTemp"
@@ -76,37 +72,37 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 			for builtBefore in $(cat "$builtPackageBeforeTemp" | tr " " "\n"); do
 				sed -e s/"$builtBefore"//g -i "$builtPackageAfterTemp"
 			done
-			
+
 			#Copy the new packages ($builtAfter) from builtPackageAfterTemp
 			echo -e "$green\nNew package(s) built:\n$reset"
 			for builtAfter in $(cat "$builtPackageAfterTemp"); do
 				tput setaf 2; cp -r -v "$repoBuildDirectory"/"$package"/"$builtAfter" "$repoPackageDirectory"/packages
 			done
-			
+
 			#Remove the old packages
 			sort -u "$builtPackageBeforeTemp" "$builtPackageAfterTemp" > "$oldPackage"
 			echo -e "$yellow$line\nRemoving old package(s):\n$reset"
-			
+
 			#Remove the newly generated packages from oldPackage (leaves only the packages existing before running makepkg)
 			for removeAfterPackages in $(cat "$builtPackageAfterTemp" | tr " " "\n"); do
 				sed -e s/"$removeAfterPackages"//g -i "$oldPackage"
 			done
-			
+
 			#Finally delete the old packages from builtPackageBeforeTemp
 			for toDelete in $(cat "$oldPackage"); do
 				echo "$yellow""$toDelete""$reset"
 				rm -r "$repoBuildDirectory"/"$package"/"$toDelete" "$repoPackageDirectory"/packages/"$toDelete"
 			done
 			echo -e "$yellow$line\n$reset"
-		
+
 		#If the built package is equal before and after makepkg, then no package has been built
 		elif [ "$(cat "$builtPackageBeforeTemp")" = "$(cat "$builtPackageAfterTemp")" ]; then
 			echo -e "$yellow$line\nNo new packages built\n$line$reset"
 		fi
-		
+
 		#Cleanup - Delete the temp files
 		rm -r "$builtPackageBeforeTemp" "$builtPackageAfterTemp" "$oldPackage"
-		
+
 		#If the versions do match do nothing
 	elif [ "$packageVersionBefore" = "$packageVersionAfter" ] && [ "$packageReleaseBefore" = "$packageReleaseAfter" ]; then
 		echo -e "$yellow$line\nThere are no updates for $package\n$line$reset"
