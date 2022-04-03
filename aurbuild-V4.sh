@@ -22,7 +22,7 @@ aurGitPackages="/home/alex/Scripts/aurgitpackages.txt"
 gitExtension="-git"
 
 #Begin the build process
-cd "$repoBuildDirectory" || echo "$red""Cannot find $repoBuildDirectory""$reset"
+cd "$repoBuildDirectory"
 for package in $(cat "$aurPackages" "$aurGitPackages"); do
 
 	#Set terminal title to check for updates
@@ -32,10 +32,10 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 		echo -e "$yellow$line\n$package does not exist, it will be built for the first time\n$line$reset"
 
 		#Download the package
-		cd "$repoBuildDirectory" || echo "$redCannot find $repoBuildDirectory$reset"
+		cd "$repoBuildDirectory"
 		aur fetch --sync=rebase "$package"
 		#Build the package
-		cd "$repoBuildDirectory"/"$package" || echo "$redCannot find $repoBuildDirectory/$package$reset"
+		cd "$repoBuildDirectory"/"$package"
 		makepkg -Cs --noconfirm --skipchecksums --skippgpcheck
 		echo -e "$green$line\n$package has been built for the first time\n$line$reset"
 		#Copy the packages(s) one at a time to the repoDirectory
@@ -44,7 +44,7 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 		done
 	else
 		#If PKGBUILD DOES exist, check it before and after an aur fetch to see if its versions change
-		cd "$repoBuildDirectory" || echo "$red Cannot find $buildDirectory $reset"
+		cd "$repoBuildDirectory"
 		#See if the pkgver in the packages PKGBUILD changes before/after aur fetch and if so, build a new package
 		packageVersionBefore=$(grep -m1 "pkgver=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -c8-)
 		packageReleaseBefore=$(grep -m1 "pkgrel=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -c8-)
@@ -61,11 +61,11 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 	#Compare the versions before and after an aur fetch and build a new versions if it changed
 	if [ "$packageVersionBefore" != "$packageVersionAfter" ] || [ "$packageReleaseBefore" != "$packageReleaseAfter" ] || [ "$gitPackageCheck" = "$gitExtension" ]; then
 		#Create temp files to store builtPackageBefore and builtPackageAfter
-		builtPackageBeforeTemp=$(mktemp) || echo "$red Cannot create temp files in /tmp/$reset"
-		builtPackageAfterTemp=$(mktemp) || echo "$red Cannot create temp files in /tmp/$reset"
-		oldPackage=$(mktemp) || echo "$red Cannot create temp files in /tmp/$reset"
+		builtPackageBeforeTemp=$(mktemp)
+		builtPackageAfterTemp=$(mktemp)
+		oldPackage=$(mktemp)
 		
-		cd "$repoBuildDirectory"/"$package" || echo "$red Cannot find $repoBuildDirectory/$package $reset"
+		cd "$repoBuildDirectory"/"$package"
 		#Check for built packages before and after running makepkg
 		echo $(ls -Art | grep ".pkg.tar.zst" | tr " " "\n") > "$builtPackageBeforeTemp"
 		makepkg -Cs --noconfirm --skipchecksums --skippgpcheck
@@ -114,7 +114,4 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 
 cd
 done
-
-#Cleanup - Delete all generated temp files if any survived
-rm -r /tmp/tmp.*
 #Upload the packages to the repo with aurupload.sh
