@@ -14,6 +14,6 @@ sed -i /"$rmPackage"/d "$aurGitPackages"
 
 #Remove the package file from the repo
 rm -v "$repoPackageDirectory"/packages/"$rmPackage"*
-rm -v -r "$repoBuildDirectory"/"$rmPackage"*
+rm -r "$repoBuildDirectory"/"$rmPackage"*
 
 echo -e "\nRemoved: $rmPackage"
