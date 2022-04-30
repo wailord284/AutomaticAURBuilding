@@ -59,7 +59,7 @@ packageDiffs=($(diff repoPackages[@] validPackages[@]))
 
 #Print packages that have now been moved to official Arch repos. You can remove these from your repo
 echo "$line"
-echo "The following packages can be removed from $repoName"
+echo "The following packages have been moved to official repos and can be removed from $repoName"
 echo "${duplicatePackages[@]}"
 echo "$line"
 #Print packages that have been removed from the AUR
