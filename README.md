@@ -69,6 +69,9 @@ I personally run this within an Arch Linux systemd-nspawn container. However, ru
 ## aurupload-V2.sh
 ![aurupload](/images/aurupload.png)
 
+## xanmod-build.sh
+![xanmod](/images/xanmod.png)
+
 ## aurremove.sh
 ![aurremove](/images/aurremove.png)
 
