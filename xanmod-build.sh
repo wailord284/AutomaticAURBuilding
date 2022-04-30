@@ -15,7 +15,7 @@ packageCompressionExtension=pkg.tar.zst
 #The number of the arch you want to build (from choose-gcc-optimizations.sh)
 #Set the arch name in [] followed by its code number
 declare -A xanmodArchTypes
-xanmodArchTypes=( [zen3]="15" [v3]="93" [v4]="94" [intel]="98" [amd]="99" )
+xanmodArchTypes=( [zen3]="15" [v2]="92" [v3]="93" [v4]="94")
 
 #Check to see if xanmodVersionInformation file exists and create it if not
 if [ -f "$xanmodVersionInformation" ]; then
