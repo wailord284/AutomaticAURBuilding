@@ -40,7 +40,7 @@ I personally run this within an Arch Linux systemd-nspawn container. However, ru
 
 ## Configuration - Extra utilities (Optional)
 - The remaining scripts are all optional but may be useful
--xanmod-build.sh - A script which will build linux-xanmod and its versions with custom optimizatons (such as x86_64-v3 or zenv3)
+- xanmod-build.sh - A script which will build linux-xanmod and its versions with custom optimizatons (such as x86_64-v3 or zenv3)
     * xanmodVersionInformation - Change this to store the versions information
     * xanmodBuildDirectory - Change this to a spot for kernels to be built
     * xanmodRepoDirectory - Change this to where the kernels will be moved once built and packaged
