@@ -7,7 +7,8 @@ export USE_CCACHE=1
 cd /home/alex/Scripts
 #Build aur packages
 /home/alex/Scripts/aurbuild-V4.sh
-wait
+#Build xanmod
+/home/alex/Scripts/xanmod-build.sh
 sleep 10s
 #Upload aur packages
 /home/alex/Scripts/aurupload-V2.sh
