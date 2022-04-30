@@ -1,3 +1,4 @@
+amf-headers-git
 ananicy-rules-git
 android-udev-git
 archey-git
@@ -20,6 +21,7 @@ dirsearch-git
 divvydroid-git
 dracula-grub-theme-git
 dracula-icons-git
+edid-decode-git
 endlessh-git
 faba-icon-theme-git
 fakeuser-git
@@ -30,9 +32,7 @@ fluent-icon-theme-git
 gedit-markdownpreview-git
 gmnisrv-git
 graphite-gtk-theme-git
-grub-themes-git
 gtk3-nocsd-git
-hardcode-tray-git
 hashcat-git
 hentaifetch-git
 intelmetool-git
@@ -46,11 +46,9 @@ low-memory-monitor-git
 lscolors-git
 me_cleaner-git
 mei-amt-check-git
-menda-themes-git
 moka-icon-theme-git
 mt-st-git
 nano-syntax-highlighting-git
-nbsdgames-git
 nix-zsh-completions-git
 nohang-git
 numix-circle-icon-theme-git
@@ -60,22 +58,17 @@ oh-my-zsh-git
 oie-icons-git
 otf-lotion-git
 paper-gtk-theme-git
-passivedns-git
 picom-tryone-git
 pipe-viewer-git
 pix-git
 pkgtop-git
 pocillo-gtk-theme-git
 pokemon-colorscripts-git
-radeon-profile-daemon-git
-radeon-profile-git
 reaver-wps-fork-t6x-git
 sdat2img-git
 selectdefaultapplication-git
 service-tools-git
 setcolors-git
-shellcheck-git-static
-snowman-git
 surfn-icons-git
 tela-circle-icon-theme-git
 tela-icon-theme-git
@@ -85,6 +78,7 @@ uemacs-git
 unimatrix-git
 vokoscreen-git
 vpnfailsafe-git
+vrrtest-git
 vspcplay-git
 waifu2x-converter-cpp-git
 wattman-gtk-git
@@ -94,7 +88,6 @@ wshowkeys-git
 x3270-git
 xemu-git
 xininfo-git
-xorgxrdp-git
 xsuspender-git
 yuzu-mainline-git
 zafiro-icon-theme-git

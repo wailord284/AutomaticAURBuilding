@@ -23,14 +23,15 @@ apache-tools
 apg
 apostrophe
 apple_cursor
+apple-fonts
 archey4
 archivemount
 archlinux-artwork
 archlinux-java-run
 archlinux-lxdm-theme-full
-archlinux-nix
 ares-emu
 aria2-fast
+arkenfox-user.js
 arno-iptables-firewall
 art-rawconverter
 aseprite
@@ -40,6 +41,7 @@ atari800
 atlauncher
 aurutils
 authenticator
+authy
 auto-auto-complete
 auto-cpufreq
 autofs
@@ -67,6 +69,7 @@ bgpq3
 bibata-cursor-translucent
 bibus
 birdtray
+blesh
 bluemail
 bootiso
 botsay
@@ -75,6 +78,7 @@ bouml
 brave-bin
 brlcad
 brunsli
+btrfsmaintenance 
 butterfly
 buttermanager
 cachefilesd
@@ -104,6 +108,7 @@ clarity-icon-theme
 click4ever
 clipit
 c-lolcat
+cloudflared
 clyrics
 cmdpack
 cmospwd
@@ -123,10 +128,13 @@ cpu-x
 createtorrent
 crusta
 cryptmount
+cubiomes-viewer
 cue2tracks
 cursor-theme-macos-big-sur
 cutecom
+c++utilities
 cvmfs
+cvs-feature
 cylon
 czkawka-gui-bin
 dangerzone
@@ -151,11 +159,13 @@ dnspeep
 dnsproxy-adguard
 dnstracer
 doas
+doh-client
 dollarskip
 dosbox-staging
 dotpac
 downgrade
 downloader-cli
+downzemall
 dracula-gtk-theme
 dragon-drop
 drawio-desktop
@@ -177,12 +187,12 @@ elflibviewer
 emacs-org-mode
 emulationstation
 emulationstation-autoscraper
+emulationstation-de
 emulationstation-themes
 enpass-bin
 epsxe
 etcher-bin
 etherwake
-ethminer-bin
 ethstatus
 evdi
 evillimiter
@@ -204,7 +214,6 @@ fbctrl
 fbdesk
 fcode-utils
 fdns
-ferdi-bin
 ferm
 fetchmirrors
 ffaudioconverter
@@ -218,12 +227,12 @@ filebrowser-bin
 findpkg
 find-the-command
 firedragon
+firefox-clearurls
 firefox-esr
 firefox-extension-canvasblocker
 firefox-extension-keepassxc-browser
 firefox-extension-localcdn
 firefox-extension-privacybadger
-firefox-extension-user-agent-switcher
 firehol
 fkill
 flann
@@ -231,6 +240,7 @@ flat-remix
 flat-remix-gtk
 flattastic-theme
 flauncher
+flexo
 flif
 flips
 flwm
@@ -271,12 +281,14 @@ gnome-menus2
 gnome-terminal-transparency
 gnome-text-editor
 gnusim8085
+google-chrome
 gpmdp
 gputest
 gpu-viewer
 gradle-bash-completion
 greed
 green-recorder
+green-tunnel
 greetd
 grig
 grub2-theme-archlinux
@@ -293,6 +305,7 @@ gtorrentviewer
 gtypist
 guayadeque
 hakuneko-desktop
+hardcode-tray
 hardened_malloc
 haruna
 hashid
@@ -337,7 +350,6 @@ ipscan
 isoimagewriter
 isomaster
 isw
-itch
 iwgtk
 ix
 j7z
@@ -345,6 +357,8 @@ jabref
 jackett
 jdownloader2
 jelly-desktop
+jellyfin-bin
+jellyfin-ffmpeg
 jellyfin-media-player
 jmtpfs
 jpcsp
@@ -383,7 +397,6 @@ libestr
 libfastjson
 libffi5
 libffi7
-libfixposix
 libfpx
 libglade
 libglademm
@@ -444,6 +457,7 @@ lxdm-themes
 lxnm
 ly
 lyrebird
+lyx
 m64p
 macchina
 macfanctld
@@ -452,11 +466,11 @@ makedeb
 makemkv
 makepkg-optimize
 maltego
+mangohud
 mantid-term
 mariadb-jdbc
 masterpdfeditor-free
 matcha-gtk-theme
-materiav2-gtk-theme
 mathpix-snipping-tool
 mbuffer
 mcaselector
@@ -475,6 +489,7 @@ menulibre
 mercury-parser
 metadata-cleaner
 metasploit-payload-creator
+milcheck
 milton
 mimeo
 mindforger
@@ -497,6 +512,7 @@ mocicon
 moc-pulse
 modprobed-db
 mongodb
+monolith
 moon-buggy
 motrix
 mouse_m908
@@ -511,6 +527,7 @@ msitools
 ms-sys
 mtop
 mu-editor
+mugshot
 multibootusb
 music-dl
 mycli
@@ -537,6 +554,7 @@ ninvaders
 nkit
 nodejs-localtunnel
 nodejs-nativefier
+nomachine
 nord-gedit
 nordic-theme
 nord-konsole
@@ -552,6 +570,7 @@ ntfs-3g-system-compression
 ntfsprogs-ntfs3
 ntpsec
 nvm
+nx
 obapps
 obbrowser
 obfilebrowser
@@ -575,9 +594,9 @@ openlitespeed
 openmsx
 openpyn-nordvpn
 openrgb
-opensnitch
 openssh-hpn
 opentx-companion
+orage
 oranchelo-icon-theme
 orchis-theme
 orion
@@ -645,6 +664,7 @@ pkgbrowser
 pkgcacheclean
 pkgdistcache
 pkghist
+plymouth
 plzip
 pm2ml
 pmount
@@ -653,7 +673,6 @@ pngzop
 pnmixer
 pokemmo
 pokeshell
-polo-bin
 polybar
 polymc
 pom1
@@ -706,7 +725,6 @@ python-altgraph
 python-apprise
 python-base32_crockford
 python-cheetah3
-python-cli_helpers
 python-coloredlogs
 python-colorful
 python-colorzero
@@ -715,7 +733,6 @@ python-executor
 python-fancycompleter
 python-ffmpeg
 python-getdevinfo
-python-gpiozero
 python-grpcio-tools
 python-guizero
 python-hsaudiotag3k
@@ -729,6 +746,7 @@ python-macholib
 python-mpv
 python-naturalsort
 python-nudatus
+python-numba
 python-palettable
 python-pgi
 python-pgzero
@@ -763,6 +781,7 @@ pyzbar
 qjoypad
 qmplay2
 qomui
+qpdfview
 qrcodegen
 quich
 quickemu
@@ -802,6 +821,7 @@ rustscan
 rutorrent
 rxvt-unicode-pixbuf
 safeeyes
+sakura
 samsung-tools
 sardi-icons
 sayonara-player
@@ -817,10 +837,9 @@ setserial
 sftpgo
 sf-transrobotics
 shadowvpn
-shattered-pixel-dungeon
 shc
-shellcheck-bin
 shim-signed
+siji-ng
 sirikali
 skeuos-gtk
 skypeforlinux-stable-bin
@@ -829,6 +848,7 @@ slurm
 smartgit
 snake-ncurses
 snescom
+snyk
 softethervpn
 spectre-meltdown-checker
 speedometer
@@ -841,13 +861,12 @@ stacer
 staruml
 steamcmd
 steamtinkerlaunch
-streamlink-twitch-gui
 subnetcalc
 sunflower
 svp
 sweet-gtk-theme-dark
-switcheroo-control
 swt
+symlinks
 sysmontask
 systemd-cron
 systemd-kcm
@@ -856,6 +875,7 @@ systemd-oomd-defaults
 systemd-shutdown-diagnose
 system-monitoring-center
 systemtap
+tabby-terminal
 tango-icon-theme
 taps
 tarlz
@@ -875,13 +895,16 @@ thunar-sendto-clamtk
 ti99sim
 tiger
 tilem
+timeshift
 tiny-media-manager
+tiv
 tixati
 tlpui
 todotxt
 toilet
 toilet-fonts
 tomb
+tor-browser
 torguard
 tornado_systemd
 torrentcheck
@@ -925,16 +948,14 @@ tuned
 tunsafe
 tuxboot
 tuxedo-keyboard
+tuxtrain
 tvheadend
-twitch-curses
-twitch-indicator
 uade
 uasm
 ucc
 ucon64
 udefrag
 uget-integrator
-ugrep
 ulauncher
 ultravnc-viewer
 unciv
@@ -955,7 +976,7 @@ videomorph
 video-trimmer
 vimix-icon-theme
 vim-plug
-virt-what
+virtio-win
 visual
 vkbasalt
 vnstatui
@@ -964,6 +985,7 @@ vte3-notification
 vtun
 vuze
 vvv-bin
+waterfox-g4-bin
 wayback_machine_downloader
 waypipe
 weather
@@ -976,8 +998,8 @@ wget2
 wgnord
 whatmp3
 whoogle
+wikiman
 windows2usb
-wine-ge-custom
 wipeclean
 wlsunset
 wmii
@@ -992,6 +1014,8 @@ wps-office
 wsdd
 wtfutil-bin
 wxhexeditor
+x2goclient
+x2goserver
 x48
 x88000
 xar
@@ -1014,7 +1038,6 @@ xiccd
 xidlehook
 xinput_calibrator
 xinput-gui
-xkb-switch
 xlivebg
 xmacro
 xml2
@@ -1022,6 +1045,7 @@ xmrig
 xnconvert
 xnp2
 xorgxrdp
+xorgxrdp-glamor
 xplorer-bin
 xrdp
 xroar
@@ -1041,12 +1065,13 @@ ytcc
 yt-dlp-drop-in
 ytmdl
 ytop
+zcfan
 zchunk
 zenmap
 zettlr
 zlib-ng
 zlib-zpipe
-zotero
+zoom
 zpaq
 zramd
 zramswap
