@@ -16,11 +16,15 @@ aurPackages="/home/alex/Scripts/aurpackages.txt"
 aurGitPackages="/home/alex/Scripts/aurgitpackages.txt"
 #Set the git package extension. This is almost always -git
 gitExtension="-git"
+#Amount of time to wait before checking a package for updates
+aurUpdateDelay=4s
 
 #Begin the build process
 cd "$repoBuildDirectory"
 for package in $(cat "$aurPackages" "$aurGitPackages"); do
 
+	#Wait for the delay
+	sleep "$aurUpdateDelay"
 	#Set terminal title to check for updates
 	echo -en "\033]0;Checking $package for updates...\a"
 	#Check to see if the PKGBUILD file does NOT exist
