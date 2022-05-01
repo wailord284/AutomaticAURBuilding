@@ -21,13 +21,13 @@ xanmodArchTypes=( [zen3]="15" [v2]="92" [v3]="93" [v4]="94")
 if [ -f "$xanmodVersionInformation" ]; then
 	echo "$xanmodVersionInformation exists. Continuing..."
 else
+	mkdir -p "$xanmodBuildDirectory"
+	mkdir -p "$xanmodRepoDirectory"
 	echo "Version file does not exist, creating at $xanmodVersionInformation"
 	for kernelType in "${xanmodKernelTypes[@]}" ; do
 		echo "$kernelType":1 >> "$xanmodVersionInformation"
 	done
 	echo "Please rerun the script"
-	mkdir -p "$xanmodBuildDirectory"
-	mkdir -p "$xanmodRepoDirectory"
 	exit 1
 fi
 
@@ -59,13 +59,13 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 			#Build the package using makepkg
 			makepkg -Cs --skippgpcheck --skipinteg --skipchecksums -p PKGBUILD-"$archType"
 			#Move the final packages
-			mv "$kernelType-$archType-$xanmodNewKernelVersion.$packageCompressionExtension" "$xanmodRepoDirectory"
-			mv "$kernelType-$archType-headers-$xanmodNewKernelVersion.$packageCompressionExtension" "$xanmodRepoDirectory"
+			mv "$kernelType-$archType-$xanmodNewKernelVersion-x86_64.$packageCompressionExtension" "$xanmodRepoDirectory"
+			mv "$kernelType-$archType-headers-$xanmodNewKernelVersion-x86_64.$packageCompressionExtension" "$xanmodRepoDirectory"
 			#Delete the custom package build so the next time aurutils runs we get an updated one
 			rm PKGBUILD-"$archType"
 			#Try to remove any old kernels
-			rm "$xanmodRepoDirectory"/"$kernelType-$archType-$xanmodOldKernelVersion.$packageCompressionExtension"
-			rm "$xanmodRepoDirectory"/"$kernelType-$archType-headers-$xanmodOldKernelVersion.$packageCompressionExtension"
+			rm "$xanmodRepoDirectory"/"$kernelType-$archType-$xanmodOldKernelVersion-x86_64.$packageCompressionExtension"
+			rm "$xanmodRepoDirectory"/"$kernelType-$archType-headers-$xanmodOldKernelVersion-x86_64.$packageCompressionExtension"
 		done
 	else
 		echo "No new kernel found for: $kernelType"
