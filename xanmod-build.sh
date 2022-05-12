@@ -13,7 +13,7 @@ xanmodKernelTypes=(linux-xanmod-edge linux-xanmod-tt)
 #The number of the arch you want to build (from choose-gcc-optimizations.sh)
 #Set the arch name in [] followed by its code number
 declare -A xanmodArchTypes
-xanmodArchTypes=([zen3]="15" [v2]="92" [v3]="93" [v4]="94")
+xanmodArchTypes=([generic]="0" [zen3]="15" [v3]="93")
 #Set what config type to use. This was added in 5.17.6. Defaults to -v2
 #Supposedly this is overwritten by custom archtypes, but in testing that doesn't seem to be the case
 xanmodBuildOptionConfig=config_x86-64
@@ -69,8 +69,9 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 			cd "$xanmodBuildDirectory"/"$kernelType"
 			cp PKGBUILD PKGBUILD-"$archType"
 			#Update the archtype pkgbuild with the new arch type
-			sed -i "s/_microarchitecture=0/_microarchitecture=${xanmodArchTypes[$archType]}/g" -i PKGBUILD-"$archType"
-			sed -i "s/pkgbase=$kernelType/pkgbase=$kernelType-$archType/g" -i PKGBUILD-"$archType"
+			sed -i "s/_microarchitecture=0/_microarchitecture=${xanmodArchTypes[$archType]}/g" PKGBUILD-"$archType"
+			sed -i "s/pkgbase=$kernelType/pkgbase=$kernelType-$archType/g" PKGBUILD-"$archType"
+			sed -i "s/_config=config_x86-64-v2/_config=$xanmodBuildOptionConfig/g" -i PKGBUILD-"$archType"
 			#Update the pkgbuild with the xanmodBuildOptions
 			if [ "$xanmodBuildOptionNuma" = n ]; then
 				sed -i "s/use_numa=y/use_numa=n/g" -i PKGBUILD-"$archType"
