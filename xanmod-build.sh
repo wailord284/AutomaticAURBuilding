@@ -1,6 +1,7 @@
 #!/bin/bash
 ###HELPFUL RESOURCES###
 #https://www.techrepublic.com/article/how-to-use-bash-associative-arrays/
+#https://aur.archlinux.org/packages/linux-xanmod-edge
 
 #Path to store the versions information
 xanmodVersionInformation=/mnt/aurbuild/kernels/xanmodVersionHistory.txt
@@ -16,6 +17,7 @@ declare -A xanmodArchTypes
 xanmodArchTypes=([generic]="0" [zen3]="15" [v3]="93")
 #Set what config type to use. This was added in 5.17.6. Defaults to -v2
 #Supposedly this is overwritten by custom archtypes, but in testing that doesn't seem to be the case
+#For now we set this to not have any v2 or v3 options
 xanmodBuildOptionConfig=config_x86-64
 #Set to y (yes) or n (no) to enable or disable NUMA. This is enabled by default and may break CUDA/NvEnc if set to no
 xanmodBuildOptionNuma=n
