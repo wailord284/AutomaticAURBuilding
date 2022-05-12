@@ -47,7 +47,7 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 		sed -i "s/$kernelType:$xanmodOldKernelVersion/$kernelType:$xanmodNewKernelVersion/g" "$xanmodVersionInformation"
 		#cd into the build directory and download the new kernel with aurutils
 		cd "$xanmodBuildDirectory"
-		aur fetch "$kernelType"
+		aur fetch --sync=rebase "$kernelType"
 		#Begin the build for each arch type
 		for archType in "${!xanmodArchTypes[@]}" ; do
 			#cd into the cloned kernel and copy the PKGBUILD to each arch type
