@@ -10,11 +10,12 @@ xanmodBuildDirectory=/mnt/aurbuild/kernels
 xanmodRepoDirectory=/mnt/aurbuild/AurmageddonRepo/packages
 #The name of the xanmod kernels you want to build
 xanmodKernelTypes=(linux-xanmod-edge linux-xanmod-tt)
-#Set the file extension of your completed package after it is compressed
-packageCompressionExtension=pkg.tar.zst
 #Set the path to your makepkg conf. This is useful for enabling ccache only for these kernels while the rest of the build does not
-#The package extension will also be grabbed from this fil
+#The package extension will also be grabbed from this file
+#You can adjust any settings in here to change how packages are created or compressed
 makepkgConfFile=/home/alex/Scripts/makepkg.conf
+#Get the package compression extension from the makepkg conf file
+packageCompressionExtension=$(grep PKGEXT "$makepkgConfFile" | cut -d"'" -f2)
 #The number of the arch you want to build (from choose-gcc-optimizations.sh)
 #Set the arch name in [] followed by its code number
 declare -A xanmodArchTypes
@@ -33,9 +34,6 @@ else
 	done
 	echo "Version file created, continuing..."
 fi
-
-#Get the package compression extension from the makepkg conf file
-packageCompressionExtension=$(grep PKGEXT "$makepkgConfFile" | cut -d"'" -f2)
 
 #Get current xanmod version from AUR
 for kernelType in "${xanmodKernelTypes[@]}" ; do
