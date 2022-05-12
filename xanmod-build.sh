@@ -83,7 +83,7 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 				sed -i "s/_compress_modules=n/_compress_modules=y/g" -i PKGBUILD-"$archType"
 			fi
 			#The config is supposed to be replaced by any other setting, but it appears to be broken
-			#We set this to plain x84_64 for a pure generic kernel and to v3 for v3 and znver3
+			#Just in case the archType is generic, we set it to a fully generic config
 			if [ "$archType" = generic ]; then
 				sed -i "s/_config=config_x86-64-v2/_config=config_x86-64/g" -i PKGBUILD-"$archType"
 			fi
