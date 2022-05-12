@@ -12,25 +12,30 @@ xanmodRepoDirectory=/mnt/aurbuild/AurmageddonRepo/packages
 xanmodKernelTypes=(linux-xanmod-edge linux-xanmod-tt)
 #Set the file extension of your completed package after it is compressed
 packageCompressionExtension=pkg.tar.zst
+#Set the path to your makepkg conf. This is useful for enabling ccache only for these kernels while the rest of the build does not
+#The package extension will also be grabbed from this fil
+makepkgConfFile=/home/alex/Scripts/makepkg.conf
 #The number of the arch you want to build (from choose-gcc-optimizations.sh)
 #Set the arch name in [] followed by its code number
 declare -A xanmodArchTypes
-xanmodArchTypes=( [zen3]="15" [v2]="92" [v3]="93" [v4]="94")
+xanmodArchTypes=([zen3]="15" [v2]="92" [v3]="93" [v4]="94")
 
 #Check to see if xanmodVersionInformation file exists and create it if not
 if [ -f "$xanmodVersionInformation" ]; then
 	echo "$xanmodVersionInformation exists. Continuing..."
 else
+	#Make the directories just in case. Mainly used this while testing so I could nuke the build directories
 	mkdir -p "$xanmodBuildDirectory"
 	mkdir -p "$xanmodRepoDirectory"
 	echo "Version file does not exist, creating at $xanmodVersionInformation"
 	for kernelType in "${xanmodKernelTypes[@]}" ; do
 		echo "$kernelType":1 >> "$xanmodVersionInformation"
 	done
-	echo "Please rerun the script"
-	exit 1
+	echo "Version file created, continuing..."
 fi
 
+#Get the package compression extension from the makepkg conf file
+packageCompressionExtension=$(grep PKGEXT "$makepkgConfFile" | cut -d"'" -f2)
 
 #Get current xanmod version from AUR
 for kernelType in "${xanmodKernelTypes[@]}" ; do
@@ -57,7 +62,7 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 			sed -i "s/_microarchitecture=0/_microarchitecture=${xanmodArchTypes[$archType]}/g" -i PKGBUILD-"$archType"
 			sed -i "s/pkgbase=$kernelType/pkgbase=$kernelType-$archType/g" -i PKGBUILD-"$archType"
 			#Build the package using makepkg
-			makepkg -Cs --skippgpcheck --skipinteg --skipchecksums -p PKGBUILD-"$archType"
+			makepkg -Cs --conf "$makepkgConfFile" --skippgpcheck -p PKGBUILD-"$archType"
 			#Move the final packages
 			mv "$kernelType-$archType-$xanmodNewKernelVersion-x86_64.$packageCompressionExtension" "$xanmodRepoDirectory"
 			mv "$kernelType-$archType-headers-$xanmodNewKernelVersion-x86_64.$packageCompressionExtension" "$xanmodRepoDirectory"
