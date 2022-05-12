@@ -15,10 +15,6 @@ xanmodKernelTypes=(linux-xanmod-edge linux-xanmod-tt)
 #Set the arch name in [] followed by its code number
 declare -A xanmodArchTypes
 xanmodArchTypes=([generic]="0" [zen3]="15" [v3]="93")
-#Set what config type to use. This was added in 5.17.6. Defaults to -v2
-#Supposedly this is overwritten by custom archtypes, but in testing that doesn't seem to be the case
-#For now we set this to not have any v2 or v3 options
-xanmodBuildOptionConfig=config_x86-64
 #Set to y (yes) or n (no) to enable or disable NUMA. This is enabled by default and may break CUDA/NvEnc if set to no
 xanmodBuildOptionNuma=n
 #Set to y (yes) or n (no) to enable or disable tracers. This is enabled by default and will limit debug functions if no
@@ -73,7 +69,6 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 			#Update the archtype pkgbuild with the new arch type
 			sed -i "s/_microarchitecture=0/_microarchitecture=${xanmodArchTypes[$archType]}/g" PKGBUILD-"$archType"
 			sed -i "s/pkgbase=$kernelType/pkgbase=$kernelType-$archType/g" PKGBUILD-"$archType"
-			sed -i "s/_config=config_x86-64-v2/_config=$xanmodBuildOptionConfig/g" -i PKGBUILD-"$archType"
 			#Update the pkgbuild with the xanmodBuildOptions
 			if [ "$xanmodBuildOptionNuma" = n ]; then
 				sed -i "s/use_numa=y/use_numa=n/g" -i PKGBUILD-"$archType"
@@ -86,6 +81,11 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 			fi
 			if [ "$xanmodBuildOptionCompression" = y ]; then
 				sed -i "s/_compress_modules=n/_compress_modules=y/g" -i PKGBUILD-"$archType"
+			fi
+			#The config is supposed to be replaced by any other setting, but it appears to be broken
+			#We set this to plain x84_64 for a pure generic kernel and to v3 for v3 and znver3
+			if [ "$archType" = generic ]; then
+				sed -i "s/_config=config_x86-64-v2/_config=config_x86-64/g" -i PKGBUILD-"$archType"
 			fi
 			#Build the package using makepkg
 			makepkg -Cs --conf "$makepkgConfFile" --skippgpcheck -p PKGBUILD-"$archType"
