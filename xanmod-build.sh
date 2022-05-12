@@ -10,16 +10,28 @@ xanmodBuildDirectory=/mnt/aurbuild/kernels
 xanmodRepoDirectory=/mnt/aurbuild/AurmageddonRepo/packages
 #The name of the xanmod kernels you want to build
 xanmodKernelTypes=(linux-xanmod-edge linux-xanmod-tt)
+#The number of the arch you want to build (from choose-gcc-optimizations.sh)
+#Set the arch name in [] followed by its code number
+declare -A xanmodArchTypes
+xanmodArchTypes=([zen3]="15" [v2]="92" [v3]="93" [v4]="94")
+#Set what config type to use. This was added in 5.17.6. Defaults to -v2
+#Supposedly this is overwritten by custom archtypes, but in testing that doesn't seem to be the case
+xanmodBuildOptionConfig=config_x86-64
+#Set to y (yes) or n (no) to enable or disable NUMA. This is enabled by default and may break CUDA/NvEnc if set to no
+xanmodBuildOptionNuma=n
+#Set to y (yes) or n (no) to enable or disable tracers. This is enabled by default and will limit debug functions if no
+xanmodBuildOptionTracers=n
+#Set to y (yes) or n (no) to enable or disable module compression. This is disabled by default but may save disk space if enabled
+xanmodBuildOptionCompression=y
+#Set to gcc or clang for the compiler. Clang may have issues. GCC is default
+xanmodBuildOptionCompiler=gcc
 #Set the path to your makepkg conf. This is useful for enabling ccache only for these kernels while the rest of the build does not
 #The package extension will also be grabbed from this file
 #You can adjust any settings in here to change how packages are created or compressed
 makepkgConfFile=/home/alex/Scripts/makepkg.conf
 #Get the package compression extension from the makepkg conf file
 packageCompressionExtension=$(grep PKGEXT "$makepkgConfFile" | cut -d"'" -f2)
-#The number of the arch you want to build (from choose-gcc-optimizations.sh)
-#Set the arch name in [] followed by its code number
-declare -A xanmodArchTypes
-xanmodArchTypes=([zen3]="15" [v2]="92" [v3]="93" [v4]="94")
+
 
 #Check to see if xanmodVersionInformation file exists and create it if not
 if [ -f "$xanmodVersionInformation" ]; then
@@ -59,6 +71,19 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 			#Update the archtype pkgbuild with the new arch type
 			sed -i "s/_microarchitecture=0/_microarchitecture=${xanmodArchTypes[$archType]}/g" -i PKGBUILD-"$archType"
 			sed -i "s/pkgbase=$kernelType/pkgbase=$kernelType-$archType/g" -i PKGBUILD-"$archType"
+			#Update the pkgbuild with the xanmodBuildOptions
+			if [ "$xanmodBuildOptionNuma" = n ]; then
+				sed -i "s/use_numa=y/use_numa=n/g" -i PKGBUILD-"$archType"
+			fi
+			if [ "$xanmodBuildOptionTracers" = n ]; then
+				sed -i "s/use_tracers=y/use_tracers=n/g" -i PKGBUILD-"$archType"
+			fi
+			if [ "$xanmodBuildOptionCompiler" = clang ]; then
+				sed -i "s/_compiler=gcc/_compiler=clang/g" -i PKGBUILD-"$archType"
+			fi
+			if [ "$xanmodBuildOptionCompression" = y ]; then
+				sed -i "s/_compress_modules=n/_compress_modules=y/g" -i PKGBUILD-"$archType"
+			fi
 			#Build the package using makepkg
 			makepkg -Cs --conf "$makepkgConfFile" --skippgpcheck -p PKGBUILD-"$archType"
 			#Move the final packages
