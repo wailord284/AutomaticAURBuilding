@@ -82,11 +82,6 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 			if [ "$xanmodBuildOptionCompression" = y ]; then
 				sed -i "s/_compress_modules=n/_compress_modules=y/g" -i PKGBUILD-"$archType"
 			fi
-			#The config is supposed to be replaced by any other setting, but it appears to be broken
-			#Just in case the archType is generic, we set it to a fully generic config
-			if [ "$archType" = generic ]; then
-				sed -i "s/_config=config_x86-64-v2/_config=config_x86-64/g" -i PKGBUILD-"$archType"
-			fi
 			#Build the package using makepkg
 			makepkg -Cs --conf "$makepkgConfFile" --skippgpcheck -p PKGBUILD-"$archType"
 			#Move the final packages
