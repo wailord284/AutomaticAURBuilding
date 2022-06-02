@@ -54,7 +54,7 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 	#We use sed to strip . and - from the versions to get 1 number
 	xanmodNewKernelVersionClean=$(echo "$xanmodNewKernelVersion" | sed -e 's/\.//g' -e 's/\-//g')
 	xanmodOldKernelVersionClean=$(echo "$xanmodOldKernelVersion" | sed -e 's/\.//g' -e 's/\-//g')
-	if [ "$xanmodNewKernelVersionClean" -gt "$xanmodOldKernelVersionClean" ]; then
+	if [ "$xanmodNewKernelVersionClean" -ne "$xanmodOldKernelVersionClean" ]; then
 		echo "New Kernel found: $kernelType:$xanmodNewKernelVersion"
 		#Update the version info with this newer version
 		sed -i "s/$kernelType:$xanmodOldKernelVersion/$kernelType:$xanmodNewKernelVersion/g" "$xanmodVersionInformation"
