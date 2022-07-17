@@ -2,7 +2,6 @@
 #Colors
 yellow=$(tput setaf 3) #Status
 green=$(tput setaf 2) #OK
-red=$(tput setaf 1) #Error
 reset=$(tput sgr 0) #Remove set color
 line="====================================================================="
 #Setup directories for building and location to files
@@ -45,8 +44,8 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 		#If PKGBUILD DOES exist, check the PKGBUILD versions, then grab a version from the AUR using curl to compare
 		cd "$repoBuildDirectory"
 		#See if the pkgver and pkgrel in the packages PKGBUILD
-		packageVersionCurrent=$(grep -m1 "pkgver=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2)
-		packageReleaseCurrent=$(grep -m1 "pkgrel=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2)
+		packageVersionCurrent=$(grep -m1 "pkgver=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2 | cut -d" " -f1)
+		packageReleaseCurrent=$(grep -m1 "pkgrel=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2 | cut -d" " -f1)
 		#Make $packageCurrent a complete version number
 		packageCurrent=$packageVersionCurrent-$packageReleaseCurrent
 		#Check for a new version and then make the current and new versions just a number
