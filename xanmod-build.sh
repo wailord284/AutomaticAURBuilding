@@ -49,7 +49,7 @@ fi
 for kernelType in "${xanmodKernelTypes[@]}" ; do
 	#First check the current version locally and remote
 	xanmodOldKernelVersion=$(grep "$kernelType" "$xanmodVersionInformation" | cut -d":" -f2)
-	xanmodNewKernelVersion=$(curl -s https://aur.archlinux.org/packages/"$kernelType" | grep -m1 "Package Details: $package" | rev | cut -c6- | cut -d" " -f1 | rev)
+	xanmodNewKernelVersion=$(curl -s https://aur.archlinux.org/packages/"$kernelType" | grep -m1 "Package Details: $package" | rev | cut -c6- | cut -d" " -f1 | rev | cut -d":" -f2)
 	#Check if the xanmodNewKernelVersion is greater than xanmodOldKernelVersion. If it is, then there is a new kernel
 	#We use sed to strip . and - from the versions to get 1 number
 	xanmodNewKernelVersionClean=$(echo "$xanmodNewKernelVersion" | sed 's/[^0-9]*//g')
