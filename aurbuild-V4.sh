@@ -16,13 +16,12 @@ aurPackages="/home/alex/Scripts/aurpackages.txt"
 aurGitPackages="/home/alex/Scripts/aurgitpackages.txt"
 #Set the git package extension. This is almost always -git
 gitExtension="-git"
-#Amount of time to wait before checking a package for updates
-aurUpdateDelay=4s
+#Amount of time to wait before checking a package for updates to prevent 429 error
+aurUpdateDelay=3s
 
 #Begin the build process
 cd "$repoBuildDirectory"
 for package in $(cat "$aurPackages" "$aurGitPackages"); do
-
 	#Wait for the delay
 	sleep "$aurUpdateDelay"
 	#Set terminal title to check for updates
@@ -46,25 +45,31 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 		#If PKGBUILD DOES exist, check it before and after an aur fetch to see if its versions change
 		cd "$repoBuildDirectory"
 		#See if the pkgver in the packages PKGBUILD changes before/after aur fetch and if so, build a new package
-		packageVersionBefore=$(grep -m1 "pkgver=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -c8-)
-		packageReleaseBefore=$(grep -m1 "pkgrel=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -c8-)
-		aur fetch --sync=rebase "$package"
-		packageVersionAfter=$(grep -m1 "pkgver=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -c8-)
-		packageReleaseAfter=$(grep -m1 "pkgrel=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -c8-)
+		packageVersionCurrent=$(grep -m1 "pkgver=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2)
+		packageReleaseCurrent=$(grep -m1 "pkgrel=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2)
+		#Make $packageBefore a complete version number and then strip it just to a raw number ($packageBeforeClean)
+		packageCurrent=$packageVersionCurrent-$packageReleaseCurrent
+		#Check for a new version and then m,ake the current and new versions just a number
+		packageNewVersionCheck=$(curl -s https://aur.archlinux.org/packages/"$package" | grep -o -P "(?<=$package ).*(?=</h2)")
+		packageCurrentClean=$(echo "$packageCurrent" | sed -e 's/\.//g' -e 's/\-//g')
+		packageNewVersionClean=$(echo $packageNewVersionCheck | sed -e 's/\.//g' -e 's/\-//g')
 	fi
 
 	#Check to see if the package ends with $gitExtension and try to build it anyways
 	#even if the PKGBUILD has not been updated, git packages may still have been updated on github
-	#running makepkg will check to see if a new update is availible	
+	#running makepkg will check to see if a new update is availible
 	gitPackageCheck=$(echo "${package: -4}")
 
 	#Compare the versions before and after an aur fetch and build a new versions if it changed
-	if [ "$packageVersionBefore" != "$packageVersionAfter" ] || [ "$packageReleaseBefore" != "$packageReleaseAfter" ] || [ "$gitPackageCheck" = "$gitExtension" ]; then
+	if [ "$packageNewVersionClean" -ne "$packageCurrentClean" ] || [ "$gitPackageCheck" = "$gitExtension" ]; then
+		#Since there's a new package, run aur fetch to update the PKGBUILD
+		aur fetch --sync=reset "$package"
+		aur fetch --sync=rebase "$package"
 		#Create temp files to store builtPackageBefore and builtPackageAfter
 		builtPackageBeforeTemp=$(mktemp)
 		builtPackageAfterTemp=$(mktemp)
 		oldPackage=$(mktemp)
-
+		#Change into the package directory to start building
 		cd "$repoBuildDirectory"/"$package"
 		#Check for built packages before and after running makepkg
 		echo $(ls -Art | grep ".pkg.tar.zst" | tr " " "\n") > "$builtPackageBeforeTemp"
