@@ -42,14 +42,14 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 			tput setaf 2; cp -r -v "$repoBuildDirectory"/"$package"/"$builtPackage" "$repoPackageDirectory"/packages
 		done
 	else
-		#If PKGBUILD DOES exist, check it before and after an aur fetch to see if its versions change
+		#If PKGBUILD DOES exist, check the PKGBUILD versions, then grab a version from the AUR using curl to compare
 		cd "$repoBuildDirectory"
-		#See if the pkgver in the packages PKGBUILD changes before/after aur fetch and if so, build a new package
+		#See if the pkgver and pkgrel in the packages PKGBUILD
 		packageVersionCurrent=$(grep -m1 "pkgver=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2)
 		packageReleaseCurrent=$(grep -m1 "pkgrel=" "$repoBuildDirectory"/"$package"/PKGBUILD | cut -d"=" -f2)
-		#Make $packageBefore a complete version number and then strip it just to a raw number ($packageBeforeClean)
+		#Make $packageCurrent a complete version number
 		packageCurrent=$packageVersionCurrent-$packageReleaseCurrent
-		#Check for a new version and then m,ake the current and new versions just a number
+		#Check for a new version and then make the current and new versions just a number
 		packageNewVersionCheck=$(curl -s https://aur.archlinux.org/packages/"$package" | grep -o -P "(?<=$package ).*(?=</h2)")
 		packageCurrentClean=$(echo "$packageCurrent" | sed -e 's/\.//g' -e 's/\-//g')
 		packageNewVersionClean=$(echo $packageNewVersionCheck | sed -e 's/\.//g' -e 's/\-//g')
@@ -60,7 +60,7 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 	#running makepkg will check to see if a new update is availible
 	gitPackageCheck=$(echo "${package: -4}")
 
-	#Compare the versions before and after an aur fetch and build a new versions if it changed
+	#Compare the current version from the PKGBUILD to the version from the AUR website
 	if [ "$packageNewVersionClean" -ne "$packageCurrentClean" ] || [ "$gitPackageCheck" = "$gitExtension" ]; then
 		#Since there's a new package, run aur fetch to update the PKGBUILD
 		aur fetch --sync=reset "$package"
