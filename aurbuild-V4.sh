@@ -61,7 +61,7 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 	gitPackageCheck=$(echo "${package: -4}")
 
 	#Compare the current version from the PKGBUILD to the version from the AUR website
-	if [ "$packageNewVersionClean" -ne "$packageCurrentClean" ] || [ "$gitPackageCheck" = "$gitExtension" ]; then
+	if [ "$packageNewVersionClean" != "$packageCurrentClean" ] || [ "$gitPackageCheck" = "$gitExtension" ]; then
 		#Since there's a new package, run aur fetch to update the PKGBUILD
 		aur fetch --sync=reset "$package"
 		aur fetch --sync=rebase "$package"
