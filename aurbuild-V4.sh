@@ -50,7 +50,7 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 		#Make $packageCurrent a complete version number
 		packageCurrent=$packageVersionCurrent-$packageReleaseCurrent
 		#Check for a new version and then make the current and new versions just a number
-		packageNewVersionCheck=$(curl -s https://aur.archlinux.org/packages/"$package" | grep -o -P "(?<=$package ).*(?=</h2)")
+		packageNewVersionCheck=$(curl -s https://aur.archlinux.org/packages/"$package" | grep -o -P "(?<=$package ).*(?=</h2)" | cut -d":" -f2)
 		packageCurrentClean=$(echo "$packageCurrent" | sed 's/[^0-9]*//g')
 		packageNewVersionClean=$(echo $packageNewVersionCheck | sed 's/[^0-9]*//g')
 	fi
