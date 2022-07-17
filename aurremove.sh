@@ -13,6 +13,7 @@ aurGitPackages="/home/alex/Scripts/aurgitpackages.txt"
 aurPackages="/home/alex/Scripts/aurpackages.txt"
 repoPackageDirectory="/mnt/aurbuild/AurmageddonRepo/packages"
 repoBuildDirectory="/mnt/aurbuild/AurmageddonBuild"
+repoVersionInformation="$repoBuildDirectory/repoHistory.txt"
 #Create array of both package files
 mapfile -t allPackages < <(cat $aurPackages $aurGitPackages | sort -u)
 
@@ -26,6 +27,7 @@ if [ $? = 0 ]; then
 	#Remove the package from both package lists if rmPackage is in allPackages
 	sed -i /"$rmPackage"/d "$aurPackages"
 	sed -i /"$rmPackage"/d "$aurGitPackages"
+	sed -i /"$rmPackage"/d "$repoVersionInformation"
 
 	echo -e "\nThe following items have been removed: "
 	#Remove the package and build files from the repo
