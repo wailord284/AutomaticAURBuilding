@@ -22,6 +22,8 @@ aurUpdateDelay=3s
 #Begin the build process
 cd "$repoBuildDirectory"
 for package in $(cat "$aurPackages" "$aurGitPackages"); do
+	#Output checking message
+	echo -e "$yellow$line\nChecking $package for updates...\n$line$reset"
 	#Wait for the delay
 	sleep "$aurUpdateDelay"
 	#Check to see if the PKGBUILD file does NOT exist
