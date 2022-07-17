@@ -60,6 +60,7 @@ for kernelType in "${xanmodKernelTypes[@]}" ; do
 		sed -i "s/$kernelType:$xanmodOldKernelVersion/$kernelType:$xanmodNewKernelVersion/g" "$xanmodVersionInformation"
 		#cd into the build directory and download the new kernel with aurutils
 		cd "$xanmodBuildDirectory"
+		aur fetch --sync=reset "$kernelType"
 		aur fetch --sync=rebase "$kernelType"
 		#Begin the build for each arch type
 		for archType in "${!xanmodArchTypes[@]}" ; do
