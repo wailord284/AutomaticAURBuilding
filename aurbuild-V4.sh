@@ -17,7 +17,7 @@ aurGitPackages="/home/alex/Scripts/aurgitpackages.txt"
 #Set the git package extension. This is almost always -git
 gitExtension="-git"
 #Amount of time to wait before checking a package for updates to prevent 429 error
-aurUpdateDelay=3s
+aurUpdateDelay=4s
 
 #Begin the build process
 cd "$repoBuildDirectory"
@@ -50,7 +50,7 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 		#Make $packageCurrent a complete version number
 		packageCurrent=$packageVersionCurrent-$packageReleaseCurrent
 		#Check for a new version and then make the current and new versions just a number
-		packageNewVersionCheck=$(curl -s https://aur.archlinux.org/packages/"$package" | grep -o -P "(?<=$package ).*(?=</h2)" | cut -d":" -f2)
+		packageNewVersionCheck=$(curl -s https://aur.archlinux.org/packages/"$package" | grep -m1 "Package Details: $package" | rev | cut -c6- | cut -d" " -f1 | rev)
 		packageCurrentClean=$(echo "$packageCurrent" | sed 's/[^0-9]*//g')
 		packageNewVersionClean=$(echo $packageNewVersionCheck | sed 's/[^0-9]*//g')
 	fi
