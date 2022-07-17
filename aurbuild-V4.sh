@@ -24,8 +24,6 @@ cd "$repoBuildDirectory"
 for package in $(cat "$aurPackages" "$aurGitPackages"); do
 	#Wait for the delay
 	sleep "$aurUpdateDelay"
-	#Set terminal title to check for updates
-	echo -en "\033]0;Checking $package for updates...\a"
 	#Check to see if the PKGBUILD file does NOT exist
 	if [ ! -f "$repoBuildDirectory"/"$package"/PKGBUILD ]; then
 		echo -e "$yellow$line\n$package does not exist, it will be built for the first time\n$line$reset"
