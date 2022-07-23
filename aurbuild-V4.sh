@@ -9,11 +9,11 @@ line="====================================================================="
 ###Do not put a trailing / at the end of the build and repo directory###
 repoBuildDirectory="/mnt/aurbuild/AurmageddonBuild"
 repoPackageDirectory="/mnt/aurbuild/AurmageddonRepo"
-repoVersionInformation="$repoVersionInformation/repoHistory.txt"
+repoVersionInformation="$repoBuildDirectory/repoHistory.txt"
 #Path to a text file containing all packages to build
-aurPackages="/home/alex/Desktop/Scripts/aurrepo/aurpackages.txt"
+aurPackages="/home/alex/Scripts/aurpackages.txt"
 #Path to a text file containing all git packages to build ending with -git
-aurGitPackages="/home/alex/Desktop/Scripts/aurrepo/aurgitpackages.txt"
+aurGitPackages="/home/alex/Scripts/aurgitpackages.txt"
 #Set the git package extension. This is almost always -git
 gitExtension="-git"
 #Amount of time to wait before checking a package for updates to prevent 429 error
@@ -24,7 +24,7 @@ aurUpdateDelay=3s
 #If the repoVersionInformation file exists, check every package from the package lists and add only the new ones to it
 if [ ! -f "$repoVersionInformation" ]; then
 	for package in $(cat "$aurPackages" "$aurGitPackages" ) ; do
-		echo "$package":1 >> "$repoVersionInformation"
+		echo "$package":001 >> "$repoVersionInformation"
 	done
 else
 	for package in $(cat "$aurPackages" "$aurGitPackages" ) ; do
@@ -55,6 +55,7 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 	#even if the PKGBUILD has not been updated, git packages may still have been updated on github
 	#running makepkg will check to see if a new update is availible
 	gitPackageCheck=$(echo "${package: -4}")
+	echo "$yellow Local verison: $packageOldVersionClean, Remote version: $packageNewVersionClean$reset"
 
 	#Compare the current version from the PKGBUILD to the version from the AUR website
 	if [ "$packageNewVersionClean" != "$packageOldVersionClean" ] || [ "$gitPackageCheck" = "$gitExtension" ]; then
@@ -114,7 +115,6 @@ for package in $(cat "$aurPackages" "$aurGitPackages"); do
 	elif [ "$packageVersionBefore" = "$packageVersionAfter" ] && [ "$packageReleaseBefore" = "$packageReleaseAfter" ]; then
 		echo -e "$yellow$line\nThere are no updates for $package\n$line$reset"
 	fi
-
 cd
 done
 #Upload the packages to the repo with aurupload.sh
